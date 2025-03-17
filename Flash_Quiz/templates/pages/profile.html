@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block title %}My Profile - Flash Quiz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">My Profile</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4 text-center">
+                            {% if user.profile_picture %}
+                                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                            {% else %}
+                                <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px; margin: 0 auto;">
+                                    <span style="font-size: 48px;">{{ user.username.0|upper }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <h4>{{ user.get_full_name|default:user.username }}</h4>
+                            <p class="text-muted">{{ user.email }}</p>
+                            <p><strong>Role:</strong> {{ user.role|title }}</p>
+                            {% if user.is_student %}
+                                <p><strong>Major:</strong> {{ user.major }}</p>
+                                <p><strong>Semester:</strong> {{ user.semester }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

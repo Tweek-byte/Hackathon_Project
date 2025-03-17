@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Available Quizzes - Flash Quiz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Available Quizzes</h1>
+    
+    {% if quizzes %}
+        <div class="row">
+            {% for quiz in quizzes %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ quiz.title }}</h5>
+                            <p class="card-text">{{ quiz.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Duration: {{ quiz.duration }} minutes</span>
+                                <a href="#" class="btn btn-primary">Start Quiz</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No quizzes are currently available for you.
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

@@ -1,0 +1,109 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Manage Students - Flash Quiz{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Manage Students - {{ request.user.department }}</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="semesterFilter" class="form-label">Filter by Semester:</label>
+                <select class="form-select" id="semesterFilter">
+                    <option value="all">All Semesters</option>
+                    {% for semester in semesters %}
+                        <option value="{{ semester }}">Semester {{ semester }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>Semester</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enrollment in students %}
+                        <tr class="semester-row" data-semester="{{ enrollment.semester }}">
+                            <td>{{ enrollment.student.username }}</td>
+                            <td>{{ enrollment.student.email }}</td>
+                            <td>{{ enrollment.semester }}</td>
+                            <td>
+                                {% if enrollment.is_verified %}
+                                    <span class="badge bg-success">Verified</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <form method="POST" class="d-inline me-2">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="student_id" value="{{ enrollment.student.id }}">
+                                        {% if enrollment.is_verified %}
+                                            <button type="submit" name="action" value="unverify" 
+                                                    class="btn btn-warning btn-sm">
+                                                Unverify
+                                            </button>
+                                        {% else %}
+                                            <button type="submit" name="action" value="verify" 
+                                                    class="btn btn-success btn-sm">
+                                                Verify
+                                            </button>
+                                        {% endif %}
+                                    </form>
+                                    <form method="POST" class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="student_id" value="{{ enrollment.student.id }}">
+                                        <button type="submit" name="action" value="remove" 
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to remove this student from your class?')">
+                                            Remove
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No students enrolled yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('semesterFilter').addEventListener('change', function() {
+    const semester = this.value;
+    const rows = document.querySelectorAll('.semester-row');
+    
+    rows.forEach(row => {
+        if (semester === 'all' || row.dataset.semester === semester) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Available Classes - Flash Quiz{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Available Classes - {{ request.user.major }}</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Professor Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for professor in professors %}
+                        <tr>
+                            <td>{{ professor.username }}</td>
+                            <td>{{ professor.email }}</td>
+                            <td>{{ professor.department }}</td>
+                            <td>
+                                {% if professor.id in current_enrollments %}
+                                    <span class="badge bg-info">Enrolled</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Not Enrolled</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="professor_id" value="{{ professor.id }}">
+                                    {% if professor.id in current_enrollments %}
+                                        <button type="submit" name="action" value="unenroll" 
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to unenroll from this class?')">
+                                            Unenroll
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" name="action" value="enroll" 
+                                                class="btn btn-primary btn-sm">
+                                            Enroll
+                                        </button>
+                                    {% endif %}
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No professors available in your major.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

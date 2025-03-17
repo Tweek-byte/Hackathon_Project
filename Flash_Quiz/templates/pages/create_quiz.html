@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Create Quiz - Flash Quiz{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Create New Quiz</h2>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="material" class="form-label">Upload Material (PDF)</label>
+                            <input type="file" class="form-control" id="material" name="material" accept=".pdf" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="department" class="form-label">Department</label>
+                            <select class="form-select" id="department" name="department" required>
+                                {% for dept in user.get_available_departments %}
+                                    <option value="{{ dept }}">{{ dept }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="semester" class="form-label">Target Semester</label>
+                            <select class="form-select" id="semester" name="semester" required>
+                                {% for i in "12345678" %}
+                                    <option value="{{ i }}">Semester {{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="duration" class="form-label">Duration</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="duration" name="duration_minutes" 
+                                       min="1" max="480" value="60" required>
+                                <span class="input-group-text">minutes</span>
+                            </div>
+                            <div class="form-text">Enter duration between 1 and 480 minutes (8 hours)</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                Create Quiz
+                            </button>
+                            <a href="{% url 'quiz_dashboard' %}" class="btn btn-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

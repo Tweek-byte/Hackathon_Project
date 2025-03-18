@@ -1,84 +1,113 @@
-# AI-Assisted Evaluation System - Flash Quiz
+# Flash Quiz
 
-## Overview
-This AI-assisted evaluation system enables professors to upload course materials, automatically generate quizzes, and assign them to students based on class (major) and semester. It ensures structured evaluations with anti-cheating measures, real-time notifications, and detailed result tracking.
+A smart and structured AI-powered evaluation system designed for students and professors. This platform automates quiz generation, enhances academic integrity with anti-cheating mechanisms, and provides real-time notifications and detailed result tracking.
 
-## Features & Flow
+---
 
-### 1. Authentication & User Roles
-#### Signup Flow
-- Users select their role during registration:
-  - **Professor**: Registers with name, email, password, department/major.
-  - **Student**: Registers with name, email, password, major, semester.
-- The system assigns them appropriate permissions.
+## 🚀 Quick Start for Collaborators
 
-#### Login Flow
-- Users log in with their email and password.
-- "Forgot Password?" feature allows password resets via email.
+### Clone the Repository
 
-### 2. Dashboard
-#### Student Dashboard
-- **Available Evaluations**: Lists quizzes they can take.
-- **Ended Evaluations**: Displays past quizzes.
-- **Profile Management**: Edit profile picture, name, email, and password.
-- **Evaluation History**: View past quiz results and personal scores.
+```sh
+# Open your terminal or command prompt and run:
+git clone https://github.com/Tweek-byte/FLash_Quiz
+cd Flash_Quiz
+```
 
-#### Professor Dashboard
-- **Evaluations Overview**: View all created quizzes.
-- **Add New Evaluation**: Upload materials and generate quizzes.
-- **Student Marks**: View and analyze students’ scores.
-- **Profile Management**: Update profile details.
+### Set Up Virtual Environment
 
-### 3. AI-Generated Quiz Creation
-#### Quiz Creation Flow
-1. **Upload Course Material**: Accepts PDF, DOCX, or plain text.
-2. **AI Processing**: The AI reads the content and generates quiz questions.
-3. **Quiz Customization**: The professor can:
-   - Edit questions and answers.
-   - Change question types (MCQs, True/False, etc.).
-   - Set a quiz title.
-4. **Assign Quiz**: Select class (major) and semester.
-5. **Set Time Limit**: Define quiz start time and duration.
-6. **Start Evaluation**: Students can now join and take the quiz.
+```sh
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
-### 4. Student Quiz-Taking Experience
-- Students see an active quiz in "Available Evaluations."
-- Upon starting, a **timer begins** counting down.
-- They **submit answers** before the time expires.
-- A confirmation appears after submission.
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
 
-### 5. Anti-Cheating Mechanism
-- If a student **switches tabs**, the system:
-  - Logs the timestamp and duration.
-  - Notifies the professor in real-time.
-  - (Optional) Warns the student.
+### Install Dependencies
 
-### 6. Evaluation Results & Reporting
-#### Student View
-- Can see only **their own scores** in "Evaluation History."
+```sh
+pip install -r requirements.txt
+```
 
-#### Professor View
-- Can view **all students' scores** in "Student Marks."
-- Can analyze **quiz performance per student.**
+### Run Migrations
 
-## Tech Stack
-### Backend
-- **Django (Python)**: Core framework.
-- **Django REST Framework**: API development.
-- **Celery + Redis**: AI processing & notifications.
+```sh
+python manage.py migrate
+```
 
-### Frontend
-- **HTML, CSS, JavaScript**: Core web technologies.
-- **React.js or Django Templates**: For UI rendering.
+### Start Development Server
 
-### Database
-- **PostgreSQL**: Stores users, quizzes, and results.
+```sh
+python manage.py runserver
+```
 
-### AI Component
-- **Deepseek AI**: Analyzes course materials and generates quiz questions.
+Access the app at: `http://127.0.0.1:8000/`
 
-### Deployment
-- **Replit**: Hosting and development.
+---
 
-## Summary
-This structured system ensures a seamless experience for both professors and students. The AI component automates quiz generation, while role-based dashboards and anti-cheating mechanisms create a reliable evaluation process.
+## ✨ Features & Workflow
+
+### 1️⃣ Authentication & User Roles
+
+- **Signup Flow:**
+  - **Professor:** Registers with name, email, password, and department.
+  - **Student:** Registers with name, email, password, major, and semester.
+  - System assigns respective permissions.
+- **Login & Password Reset:** Secure login with a "Forgot Password?" option.
+
+### 2️⃣ Dashboard
+
+#### **Student Dashboard**
+
+- View available and past evaluations.
+- Manage profile details.
+- Track quiz history and results.
+
+#### **Professor Dashboard**
+
+- View created quizzes and student performance.
+- Create new quizzes from uploaded materials.
+- Manage personal profile details.
+
+### 3️⃣ AI-Powered Quiz Creation
+
+- Upload course material (PDF, DOCX, or plain text).
+- AI processes content and generates quiz questions.
+- Customize quiz (edit questions, set time limits, assign to students).
+
+### 4️⃣ Student Quiz-Taking Experience
+
+- Students can take active quizzes within the set time.
+- Automatic submission before the timer expires.
+
+### 5️⃣ Anti-Cheating Mechanism
+
+- Tab switching is logged and notified to professors.
+- Optionally warns students for suspicious behavior.
+
+### 6️⃣ Evaluation & Reporting
+
+- **Students:** Can only view their own scores.
+- **Professors:** Get insights into student performances.
+
+---
+
+## 🛠 Tech Stack
+
+- **Backend:** Django (Python), Django REST Framework, Celery + Redis
+- **Frontend:** HTML, CSS, JavaScript (React.js or Django Templates)
+- **Database:** PostgreSQL
+- **AI Component:** Deepseek AI for quiz generation
+- **Deployment:** Replit
+
+---
+
+## 📌 Summary
+
+This AI-driven quiz platform automates evaluation, enhances security, and streamlines academic assessments. With dedicated dashboards for professors and students, structured workflow, and anti-cheating features, Flash Quiz ensures a seamless and fair assessment process.\
+\
+Best Regards, Zakaria Aabab.
+
